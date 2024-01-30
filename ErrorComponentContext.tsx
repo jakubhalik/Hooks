@@ -1,4 +1,5 @@
 'use client';
+
 import { ReactNode, createContext, useContext, useState } from 'react';
 
 type ErrorComponentContextType = {
@@ -13,15 +14,14 @@ const ErrorComponentContext = createContext<
 
 export const useErrorComponentOpened = () => {
     const context = useContext(ErrorComponentContext);
-
     if (!context) {
         throw new Error(
             'useErrorComponentOpened must be used within an ErrorComponentProvider.'
         );
     }
-
     return context;
 };
+
 interface ErrorComponentProviderProps {
     children: ReactNode;
 }

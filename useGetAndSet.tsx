@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useErrorState } from './ErrorContext';
 import { ErrorResponse, useFetch } from './useFetch';
 
 type FetchConfig = {
@@ -28,13 +29,17 @@ export default function useGetAndSet(
 
     const [states, setStates] = useState<Record<string, string[]>>({});
 
+    const { showError } = useErrorState();
+
     const fetchData = useCallback(
         async (stateKey: string) => {
             const config = fetchConfigs.find((c) => c.stateKey === stateKey);
 
             if (!config) {
+                showError(`No configuration found for stateKey: ${stateKey}.`);
+
                 console.error(
-                    `No configuration found for stateKey: ${stateKey}`
+                    `No configuration found for stateKey: ${stateKey}.`
                 );
                 return;
             }
@@ -58,10 +63,10 @@ export default function useGetAndSet(
 
                 console.log(`${displayKey}:`, data);
             } else if ('error' in response) {
-                console.error(`Error fetching ${stateKey}`, response.error);
+                showError(`Error fetching ${stateKey}. ${response.error}`);
             }
         },
-        [fetchApi, fetchConfigs]
+        [fetchApi, fetchConfigs, showError]
     );
 
     const result: ReturnConfig<string[]> = {};

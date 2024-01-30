@@ -1,3 +1,5 @@
+'use client';
+
 import { SignInResponse } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
@@ -37,11 +39,11 @@ export function useAuth(
                         router.push(push);
                     }
                 } else {
-                    showError('Unexpected error: result is undefined');
+                    showError('Unexpected error: result is undefined.');
                 }
             } catch (err) {
                 showError(
-                    err instanceof Error ? err.message : 'An error occurred'
+                    err instanceof Error ? err.message : 'An error occurred.'
                 );
             } finally {
                 setLoading(false);

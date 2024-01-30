@@ -7,7 +7,9 @@ export const useSecureFormState = (initialData: {
     identifier?: string;
 }) => {
     const [data, setData] = useState(initialData);
+
     const passwordRef = useRef<HTMLInputElement>(null);
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setData((prevData) => ({ ...prevData, [name]: value }));

@@ -35,11 +35,13 @@ export const useFetch = () => {
 
                 if (!response.ok) {
                     const errorData: ErrorResponse = await response.json();
+
                     showError(errorData.message || 'An error occurred.');
-                    console.log(errorData.message || 'An error occurred.');
+
                     return { error: errorData };
                 } else {
                     const data = await response.json();
+
                     return { data };
                 }
             } catch (error) {
@@ -53,8 +55,9 @@ export const useFetch = () => {
                               message: 'An unexpected error occurred.',
                               status: 500,
                           };
-                showError(errorMessage.message);
-                console.log(errorMessage.message, errorMessage.status);
+
+                showError(`${errorMessage.message}, ${errorMessage.status}`);
+
                 return { error: errorMessage };
             }
         },
